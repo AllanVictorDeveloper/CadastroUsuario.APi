@@ -1,4 +1,5 @@
 
+using CadastroUsuario.Api.Configuration;
 using CadastroUsuario.Api.Middleware;
 using CadastroUsuario.Domain.Interfaces;
 using CadastroUsuario.Infra.IoC;
@@ -16,6 +17,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAutoMapperConfiguration();
 
 
 

@@ -21,13 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroUsuario.Infra.IoC",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroUsuario.Application", "CadastroUsuario.Application\CadastroUsuario.Application.csproj", "{BCBF4C41-8E97-44A3-BA13-6FE7D326D625}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadastroUsuario.Domain", "CadastroUsuario.Domain\CadastroUsuario.Domain.csproj", "{D63BE45F-F4FE-4D6C-BFEF-F527F26752B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroUsuario.Domain", "CadastroUsuario.Domain\CadastroUsuario.Domain.csproj", "{D63BE45F-F4FE-4D6C-BFEF-F527F26752B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadastroUsuario.Api", "CadastroUsuario.Api\CadastroUsuario.Api.csproj", "{4AAF34FD-228B-4C47-A8D4-7940C7EA6DD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroUsuario.Api", "CadastroUsuario.Api\CadastroUsuario.Api.csproj", "{4AAF34FD-228B-4C47-A8D4-7940C7EA6DD4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{4AF92D02-79CB-413B-BA81-DA67EB22702E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadastroUsuario.Identity", "CadastroUsuario.Identity\CadastroUsuario.Identity.csproj", "{741409A4-7CDB-4EF6-8FE4-758908F8DEE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadastroUsuario.Identity", "CadastroUsuario.Identity\CadastroUsuario.Identity.csproj", "{741409A4-7CDB-4EF6-8FE4-758908F8DEE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,14 @@
 ﻿using CadastroUsuario.Application.Interfaces.Services;
+using CadastroUsuario.Application.Services;
+using CadastroUsuario.Domain.Entities;
 using CadastroUsuario.Domain.Interfaces;
+using CadastroUsuario.Domain.Interfaces.Repositories;
+using CadastroUsuario.Domain.Interfaces.Services;
+using CadastroUsuario.Domain.Services;
 using CadastroUsuario.Identity.Data;
 using CadastroUsuario.Identity.Services;
 using CadastroUsuario.Infra.Data;
+using CadastroUsuario.Infra.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,13 +38,20 @@ namespace CadastroUsuario.Infra.IoC
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
 
-            //// Repository
-            //services.AddScoped<ICategoryRepository, CategoryRepository>();
-            //services.AddScoped<IProductRepository, ProductRepository>();
+            // App
 
-            //// Services
-            //services.AddScoped<ICategoryService, CategoryService>();
-            //services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IAppPessoa, AppPessoa>();
+
+            //// Repository
+            services.AddScoped<IRepositoryPessoa, RepositoryPessoa>();
+            services.AddScoped<IRepositoryBase<Pessoa>, RepositoryBase<Pessoa>>();
+
+
+            // Services
+            services.AddScoped<IServicePessoa, ServicePessoa>();
+            services.AddScoped<IServicoBase<Pessoa>, ServicoBase<Pessoa>>();
+
+
 
             //// AutoMapper
             //services.AddAutoMapper(typeof(MappingProfile));

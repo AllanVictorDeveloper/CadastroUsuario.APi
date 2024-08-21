@@ -16,6 +16,19 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+
+        //modelBuilder.ApplyConfiguration(new ArquivoMap());
+        //modelBuilder.ApplyConfiguration(new ProtocoloMap());
+        //modelBuilder.ApplyConfiguration(new SetorMap());
+        //modelBuilder.ApplyConfiguration(new AgendamentoMap());
+        //modelBuilder.ApplyConfiguration(new AutoConstatacaoMap());
+        //modelBuilder.ApplyConfiguration(new BoletimMap());
+        //modelBuilder.ApplyConfiguration(new CadastroCredenciadaMap());
+        //modelBuilder.ApplyConfiguration(new CadastroEmpresaMap());
+        //modelBuilder.ApplyConfiguration(new CadastroPlacaMap());
+        //modelBuilder.ApplyConfiguration(new CadastroVinculadasMap());
+
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
