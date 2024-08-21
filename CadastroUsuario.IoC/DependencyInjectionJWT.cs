@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -11,9 +12,10 @@ namespace CadastroUsuario.Infra.IoC
     {
         public static IServiceCollection AddInfrastructureJWT(this IServiceCollection services, IConfiguration configuration)
         {
-        
+            var teste = configuration["Jwt:SecretKey"];
 
-            services.AddAuthentication(options =>
+
+            _ = services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -41,9 +43,51 @@ namespace CadastroUsuario.Infra.IoC
                 {
                     OnAuthenticationFailed = context =>
                     {
-                        // Adicione logs detalhados aqui para depuração
+          
                         Console.WriteLine($"Authentication failed: {context.Exception.Message}");
+
+
                         return Task.CompletedTask;
+                    },
+                    OnChallenge = context =>
+                    {
+                        // Manipulação personalizada da resposta de erro
+                        context.HandleResponse();
+                        context.Response.ContentType = "application/json";
+
+                        if (context.Error == "invalid_token")
+                        {
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            var result = new
+                            {
+                                message = "O token fornecido é inválido.",
+                                status = 401
+                            };
+                            return context.Response.WriteAsJsonAsync(result);
+                        }
+                        else if (context.Error == "missing_token")
+                        {
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            var result = new
+                            {
+                                message = "Token ausente na requisição.",
+                                status = 401
+                            };
+                            return context.Response.WriteAsJsonAsync(result);
+                        }
+                        else
+                        {
+                            // Caso genérico
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            var result = new
+                            {
+                                message = "Você não está autenticado.",
+                                status = 401
+                            };
+                            return context.Response.WriteAsJsonAsync(result);
+
+
+                        }
                     }
                 };
             });

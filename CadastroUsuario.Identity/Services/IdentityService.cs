@@ -12,7 +12,7 @@ using System.Text;
 
 
 
-namespace CadastroUsuario.Identity.Identity
+namespace CadastroUsuario.Identity.Services
 {
     public class IdentityService : IIdentityService
     {
@@ -135,11 +135,15 @@ namespace CadastroUsuario.Identity.Identity
         {
             var claims = new List<Claim>();
 
+            // Usar Unix timestamp para nbf e iat
+            var nbf = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString();
+            var iat = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString();
+
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
             claims.Add(new Claim(JwtRegisteredClaimNames.Name, user.UserName));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, DateTime.Now.ToString()));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString()));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, nbf));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Iat, iat));
 
             if (adicionarClaimsUsuario)
             {
@@ -158,20 +162,19 @@ namespace CadastroUsuario.Identity.Identity
         private string GerarToken(IEnumerable<Claim> claims, DateTime dataExpiracao)
         {
 
+
+
             // Gerar chave privada para gerar o token
             var privateKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
 
             // Gerar assinatura digital do token
             var credentials = new SigningCredentials(privateKey, SecurityAlgorithms.HmacSha256);
 
-            // Definir tempo de expiração do token
-            var expiration = DateTime.UtcNow.AddHours(24);
-
+            
             var jwt = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                notBefore: DateTime.Now,
                 expires: dataExpiracao,
                 signingCredentials: credentials);
 

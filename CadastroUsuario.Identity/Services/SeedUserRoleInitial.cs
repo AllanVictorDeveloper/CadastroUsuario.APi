@@ -1,7 +1,7 @@
 ﻿using CadastroUsuario.Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace CadastroUsuario.Identity.Identity
+namespace CadastroUsuario.Identity.Services
 {
     public class SeedUserRoleInitial : ISeedUserRoleInitial
     {

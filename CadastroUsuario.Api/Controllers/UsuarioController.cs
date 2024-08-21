@@ -45,7 +45,7 @@ namespace CadastroUsuario.Api.Controllers
         }
 
         [HttpPost("cadastrar")]
-        [Authorize]
+        [Authorize(Roles = Roles.Administrador)]
         //[ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult> Cadastrar(UsuarioCadastroRequest request)
         {
@@ -68,7 +68,6 @@ namespace CadastroUsuario.Api.Controllers
 
 
         [HttpGet("logout")]
-        [Authorize(Roles = Roles.Administrador)]
         public async Task<ActionResult> Logout()
         {
             if (!ModelState.IsValid)

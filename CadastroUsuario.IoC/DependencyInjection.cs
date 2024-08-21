@@ -1,7 +1,7 @@
 ﻿using CadastroUsuario.Application.Interfaces.Services;
 using CadastroUsuario.Domain.Interfaces;
 using CadastroUsuario.Identity.Data;
-using CadastroUsuario.Identity.Identity;
+using CadastroUsuario.Identity.Services;
 using CadastroUsuario.Infra.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -11,10 +11,10 @@ namespace CadastroUsuario.Api.Controllers.Shared
         {
             Title = status switch
             {
-                HttpStatusCode.BadRequest => "Ocorreram um ou mais erros de validação.",
-                HttpStatusCode.Unauthorized => "Usuário ou senha estão incorretos",
-                HttpStatusCode.Forbidden => "Usuário não tem permissão",
-                HttpStatusCode.InternalServerError => "Erro do Servidor Interno.",
+                HttpStatusCode.BadRequest => detail,
+                HttpStatusCode.Unauthorized => detail,
+                HttpStatusCode.Forbidden => detail,
+                HttpStatusCode.InternalServerError => detail,
                 _ => "Ocorreu um erro."
             };
             
