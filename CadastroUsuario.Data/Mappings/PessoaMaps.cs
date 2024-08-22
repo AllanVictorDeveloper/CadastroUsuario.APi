@@ -1,6 +1,7 @@
 ﻿using CadastroUsuario.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 
 namespace SisConFin.Infra.Data.Mappings
@@ -21,32 +22,31 @@ namespace SisConFin.Infra.Data.Mappings
                .HasColumnType("VARCHAR(100)")
                .IsRequired();
 
-
             builder.Property(x => x.CPF)
-                 .HasMaxLength(11)
-                 .HasColumnType("VARCHAR(11)")
-                 .IsRequired();
+                .HasMaxLength(11)
+                .HasColumnType("VARCHAR(11)")
+                .IsRequired();
 
             builder.HasIndex(x => x.CPF)
                 .IsUnique()
                 .HasDatabaseName("IX_CPF_Unique");
 
             builder.Property(x => x.DataNascimento)
-                 .HasColumnType("DATE")
-                 .IsRequired();
+                .HasColumnType("DATE")
+                .IsRequired();
 
             builder.Property(x => x.DataCadastro)
                 .HasColumnType("DATE")
                 .IsRequired();
 
-            builder.Property(x => x.CPF)
-                 .HasMaxLength(20)
-                 .HasColumnType("VARCHAR(20)")
-                 .IsRequired();
+            // Configuração do relacionamento com a entidade Foto
+            builder.HasMany(x => x.Fotos)
+                .WithOne(f => f.Pessoa)
+                .HasForeignKey(f => f.PessoaId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.ToTable("Pessoas");
-
-
         }
+
     }
 }

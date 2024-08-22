@@ -3,6 +3,7 @@ using CadastroUsuario.Api.Configuration;
 using CadastroUsuario.Api.Middleware;
 using CadastroUsuario.Domain.Interfaces;
 using CadastroUsuario.Infra.IoC;
+using FluentValidation.AspNetCore;
 using Microsoft.IdentityModel.Logging;
 using System.Text.Json.Serialization;
 
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapperConfiguration();
 
+builder.Services.AddValidationConfiguration();
 
 
 builder.Services.AddCors(options =>

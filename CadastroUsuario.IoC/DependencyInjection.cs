@@ -41,15 +41,20 @@ namespace CadastroUsuario.Infra.IoC
             // App
 
             services.AddScoped<IAppPessoa, AppPessoa>();
+            services.AddScoped<IAppFoto, AppFoto>();
 
             //// Repository
             services.AddScoped<IRepositoryPessoa, RepositoryPessoa>();
+            services.AddScoped<IRepositoryFoto, RepositoryFoto>();
             services.AddScoped<IRepositoryBase<Pessoa>, RepositoryBase<Pessoa>>();
+            services.AddScoped<IRepositoryBase<Foto>, RepositoryBase<Foto>>();
 
 
             // Services
             services.AddScoped<IServicePessoa, ServicePessoa>();
+            services.AddScoped<IServiceFoto, ServiceFoto>();
             services.AddScoped<IServicoBase<Pessoa>, ServicoBase<Pessoa>>();
+            services.AddScoped<IServicoBase<Foto>, ServicoBase<Foto>>();
 
 
 

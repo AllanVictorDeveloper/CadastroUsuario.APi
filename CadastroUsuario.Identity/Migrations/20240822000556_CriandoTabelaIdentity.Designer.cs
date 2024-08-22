@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CadastroUsuario.Identity.Migrations
 {
     [DbContext(typeof(IdentityDataContext))]
-    [Migration("20240820010657_CriandoTabelaIdentity")]
+    [Migration("20240822000556_CriandoTabelaIdentity")]
     partial class CriandoTabelaIdentity
     {
         /// <inheritdoc />

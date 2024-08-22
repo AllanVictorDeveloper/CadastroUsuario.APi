@@ -15,27 +15,8 @@ namespace CadastroUsuario.Domain.Entities
 
         public string? Sexo { get; set; }
 
-        public string? Foto { get; set; }
+        public ICollection<Foto> Fotos { get; set; } = new List<Foto>();
 
-        public Pessoa(string? nome, string? sobreNome, string? cPF, DateTime dataNascimento, string? sexo, string? foto)
-        {
-            Nome = nome;
-            SobreNome = sobreNome;
-            CPF = cPF;
-            DataNascimento = dataNascimento;
-            Sexo = sexo;
-            Foto = foto;
-            DataCadastro = DateTime.Now;
-        }
-
-        public void Update(string? nome, string? sobreNome, string? cPF, DateTime dataNascimento, string? sexo, string? foto)
-        {
-            this.Nome = nome;
-            SobreNome = sobreNome;
-            CPF = cPF;
-            DataNascimento = dataNascimento;
-            Sexo = sexo;
-            Foto = foto;
-        }
+        
     }
 }
