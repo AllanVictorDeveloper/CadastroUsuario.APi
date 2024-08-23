@@ -2,9 +2,9 @@
 
 namespace CadastroUsuario.Domain.Interfaces.Repositories;
 
-public interface IRepositoryBase<T> : IDisposable where T : class
+public interface IRepositoryBase<T>  where T : class
 {
-    T Inserir(T objeto);
+    Task<T> InserirAsync(T objeto);
 
     T Atualizar(T objeto);
 

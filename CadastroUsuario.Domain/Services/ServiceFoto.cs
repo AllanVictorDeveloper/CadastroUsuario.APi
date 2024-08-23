@@ -8,11 +8,14 @@ namespace CadastroUsuario.Domain.Services
     public class ServiceFoto : ServicoBase<Foto>, IServiceFoto
     {
 
-        private readonly IRepositoryFoto _repositoryFoto;
+        //private readonly IRepositoryFoto _repositoryFoto;
 
-        public ServiceFoto(IRepositoryFoto repositoryFoto) : base(repositoryFoto)
+        //public ServiceFoto(IRepositoryFoto repositoryFoto) : base(repositoryFoto)
+        //{
+        //    _repositoryFoto = repositoryFoto;
+        //}
+        public ServiceFoto(IRepositoryBase<Foto> repositorioBase) : base(repositorioBase)
         {
-            _repositoryFoto = repositoryFoto;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace CadastroUsuario.Infra.Data.Mapper
 
         public PessoaMapper()
         {
-            CreateMap<Pessoa, PessoaRequest>().ReverseMap();
+            CreateMap<Pessoa, PessoaCadastroRequest>().ReverseMap();
             CreateMap<Pessoa, PessoaResponse>().ReverseMap();
 
         }

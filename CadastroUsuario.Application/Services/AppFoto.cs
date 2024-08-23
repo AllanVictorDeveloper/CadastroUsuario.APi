@@ -6,8 +6,10 @@ namespace CadastroUsuario.Application.Services
 {
     public class AppFoto : AppBase<Foto>, IAppFoto
     {
-        public AppFoto(IServicoBase<Foto> servico) : base(servico)
+        private readonly IServiceFoto _serviceFoto;
+        public AppFoto(IServiceFoto serviceFoto) : base(serviceFoto)
         {
+            _serviceFoto = serviceFoto;
         }
     }
 }

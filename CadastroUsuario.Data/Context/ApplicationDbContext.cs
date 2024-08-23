@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Pessoa> Pessoas { get; set; }
+    public DbSet<Foto> Fotos { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,7 +30,7 @@ public class ApplicationDbContext : DbContext
         //modelBuilder.ApplyConfiguration(new CadastroPlacaMap());
         //modelBuilder.ApplyConfiguration(new CadastroVinculadasMap());
 
+        //modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

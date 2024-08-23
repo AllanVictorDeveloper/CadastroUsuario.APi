@@ -8,11 +8,14 @@ namespace CadastroUsuario.Domain.Services
     public class ServicePessoa : ServicoBase<Pessoa>, IServicePessoa
     {
 
-        private readonly IRepositoryPessoa _repositorioPessoa;
+        //private readonly IRepositoryPessoa _repositorioPessoa;
 
-        public ServicePessoa(IRepositoryPessoa repositorioPessoa) : base(repositorioPessoa)
+        //public ServicePessoa(IRepositoryPessoa repositorioPessoa) : base(repositorioPessoa)
+        //{
+        //    _repositorioPessoa = repositorioPessoa;
+        //}
+        public ServicePessoa(IRepositoryBase<Pessoa> repositorioBase) : base(repositorioBase)
         {
-            _repositorioPessoa = repositorioPessoa;
         }
     }
 }

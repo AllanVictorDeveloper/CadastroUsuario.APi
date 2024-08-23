@@ -24,15 +24,16 @@ namespace CadastroUsuario.Api.Controllers
         [Authorize]
         [EnableCors]
         [HttpPost("Cadastrar")]
+        [Consumes("multipart/form-data")]
         [DisableRequestSizeLimit]
-        public ActionResult Cadastrar([FromBody] PessoaRequest request)
+        public ActionResult Cadastrar([FromForm] PessoaCadastroRequest request)
         {
             //if (!ModelState.IsValid)
             //    return BadRequest(ModelState);
 
             try
             {
-                _appPessoa.Cadastrar(request);
+                _appPessoa.CadastrarAsync(request);
 
 
                 return StatusCode(201);

@@ -7,10 +7,10 @@ namespace CadastroUsuario.Application.Interfaces.Services
 {
     public interface IAppPessoa : IAppBase<Pessoa>
     {
-        void Cadastrar(PessoaRequest request);
+        Task CadastrarAsync(PessoaCadastroRequest request);
 
 
-        PessoaResponse Atualizar(PessoaRequest request);
+        PessoaResponse Atualizar(PessoaCadastroRequest request);
 
         ICollection<PessoaResponse> RetornarTodos();
         PessoaResponse RetornarPorId(int Id);

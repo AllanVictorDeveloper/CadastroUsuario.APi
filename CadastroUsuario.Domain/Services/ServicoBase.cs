@@ -28,9 +28,9 @@ public class ServicoBase<T> : IServicoBase<T> where T : class
         _repositorioBase.ExcluirPermanente(id);
     }
 
-    public T Inserir(T objeto)
+    public async Task<T> Inserir(T objeto)
     {
-        return _repositorioBase.Inserir(objeto);
+        return await _repositorioBase.InserirAsync(objeto);
     }
 
     public T RetornaPorId(int id)
@@ -43,8 +43,4 @@ public class ServicoBase<T> : IServicoBase<T> where T : class
         return _repositorioBase.ListarTudo();
     }
 
-    public void Dispose()
-    {
-        _repositorioBase.Dispose();
-    }
 }

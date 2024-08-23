@@ -20,14 +20,13 @@ namespace CadastroUsuario.Infra.IoC
     {
         public static IServiceCollection AddInfrastructureAPI(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("Connection");
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(connectionString);
+                options.UseNpgsql(configuration.GetConnectionString("Connection"));
             });
 
             services.AddDbContext<IdentityDataContext>(options =>
-                options.UseNpgsql(connectionString)
+                options.UseNpgsql(configuration.GetConnectionString("Connection"))
             );
 
             //Services Identity
@@ -46,15 +45,15 @@ namespace CadastroUsuario.Infra.IoC
             //// Repository
             services.AddScoped<IRepositoryPessoa, RepositoryPessoa>();
             services.AddScoped<IRepositoryFoto, RepositoryFoto>();
-            services.AddScoped<IRepositoryBase<Pessoa>, RepositoryBase<Pessoa>>();
-            services.AddScoped<IRepositoryBase<Foto>, RepositoryBase<Foto>>();
+            //services.AddScoped<IRepositoryBase<Pessoa>, RepositoryBase<Pessoa>>();
+            //services.AddScoped<IRepositoryBase<Foto>, RepositoryBase<Foto>>();
 
 
             // Services
             services.AddScoped<IServicePessoa, ServicePessoa>();
             services.AddScoped<IServiceFoto, ServiceFoto>();
-            services.AddScoped<IServicoBase<Pessoa>, ServicoBase<Pessoa>>();
-            services.AddScoped<IServicoBase<Foto>, ServicoBase<Foto>>();
+            //services.AddScoped<IServicoBase<Pessoa>, ServicoBase<Pessoa>>();
+            //services.AddScoped<IServicoBase<Foto>, ServicoBase<Foto>>();
 
 
 

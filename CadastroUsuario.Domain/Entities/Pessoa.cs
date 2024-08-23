@@ -8,6 +8,15 @@ namespace CadastroUsuario.Domain.Entities
 {
     public class Pessoa : EntityBase
     {
+        public Pessoa(string? nome, string? sobreNome, string? cPF, DateTime dataNascimento, string? sexo)
+        {
+            Nome = nome;
+            SobreNome = sobreNome;
+            CPF = cPF;
+            DataNascimento = dataNascimento;
+            Sexo = sexo;
+        }
+
         public string? Nome { get; set; }
         public string? SobreNome { get; set; }
         public string? CPF { get; set; }

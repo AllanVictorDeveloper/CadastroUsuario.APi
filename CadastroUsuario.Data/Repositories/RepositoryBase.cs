@@ -1,10 +1,11 @@
-﻿using CadastroUsuario.Domain.Interfaces.Repositories;
+﻿using CadastroUsuario.Domain.Entities;
+using CadastroUsuario.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace CadastroUsuario.Infra.Data.Repositories
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public class RepositoryBase<T> : IRepositoryBase<T> where T :  EntityBase
     {
 
         protected readonly ApplicationDbContext _context;
@@ -18,7 +19,7 @@ namespace CadastroUsuario.Infra.Data.Repositories
 
         public T Atualizar(T objeto)
         {
-            var result = _dbSet.Find(objeto);
+            var result = _dbSet.Find(objeto.Id);
 
             if (result != null)
             {
@@ -39,15 +40,15 @@ namespace CadastroUsuario.Infra.Data.Repositories
             }
         }
 
-        public void Dispose()
-        {
-            _context.Dispose();
-            GC.SuppressFinalize(this);
-        }
+        //public void Dispose()
+        //{
+        //    _context.Dispose();
+        //    GC.SuppressFinalize(this);
+        //}
 
         public void Excluir(int id)
         {
-            using var trans = _context.Database.BeginTransaction();
+           
             try
             {
                 var o = _dbSet.Find(id);
@@ -57,18 +58,18 @@ namespace CadastroUsuario.Infra.Data.Repositories
                 _context.Entry(o).State = EntityState.Modified;
                 _context.SaveChanges();
 
-                trans.Commit();
+
             }
             catch (Exception err)
             {
-                trans.Rollback();
+
                 throw err;
             }
         }
 
         public void ExcluirPermanente(int id)
         {
-            using var trans = _context.Database.BeginTransaction();
+           
             try
             {
                 var objeto = _dbSet.Find(id);
@@ -77,31 +78,32 @@ namespace CadastroUsuario.Infra.Data.Repositories
                 _context.Entry(objeto).State = EntityState.Deleted;
                 _context.SaveChanges();
 
-                trans.Commit();
+
             }
             catch (Exception err)
             {
-                trans.Rollback();
+
                 throw err;
             }
         }
 
-        public T Inserir(T objeto)
+        public async Task<T> InserirAsync(T objeto)
         {
-            using var trans = _context.Database.BeginTransaction();
+
             try
             {
                 _context.Entry(objeto).State = EntityState.Added;
-                _context.SaveChanges();
-                trans.Commit();
+                await _context.SaveChangesAsync();
+
 
                 return objeto;
             }
-            catch (Exception err)
+            catch (Exception)
             {
-                trans.Rollback();
-                throw err;
+
+                throw;
             }
+
         }
 
         public virtual ICollection<T> ListarTudo()

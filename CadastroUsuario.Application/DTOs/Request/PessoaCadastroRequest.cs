@@ -1,8 +1,11 @@
 ﻿
 
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+
 namespace CadastroUsuario.Application.DTOs.Request
 {
-    public class PessoaRequest
+    public class PessoaCadastroRequest
     {
         public string? Nome { get; set; }
         public string? SobreNome { get; set; }
@@ -11,6 +14,7 @@ namespace CadastroUsuario.Application.DTOs.Request
 
         public string? Sexo { get; set; }
 
-        public string? Foto { get; set; }
+        [Required]
+        public IFormFile Foto { get; set; }
     }
 }

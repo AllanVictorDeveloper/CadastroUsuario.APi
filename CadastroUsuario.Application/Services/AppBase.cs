@@ -23,9 +23,9 @@ namespace CadastroUsuario.Application.Services
             _servico.Excluir(id);
         }
 
-        public virtual T Inserir(T objeto)
+        public virtual async Task<T> Inserir(T objeto)
         {
-            return _servico.Inserir(objeto);
+            return await _servico.Inserir(objeto);
         }
 
         public virtual ICollection<T> ListarTudo()

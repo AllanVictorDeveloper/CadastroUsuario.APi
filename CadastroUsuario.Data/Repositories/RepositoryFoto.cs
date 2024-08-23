@@ -1,5 +1,6 @@
 ﻿using CadastroUsuario.Domain.Entities;
 using CadastroUsuario.Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CadastroUsuario.Infra.Data.Repositories
@@ -7,18 +8,21 @@ namespace CadastroUsuario.Infra.Data.Repositories
     public class RepositoryFoto : RepositoryBase<Foto>, IRepositoryFoto
     {
 
+
         public RepositoryFoto(ApplicationDbContext context) : base(context)
         {
 
 
         }
 
-    
-   
 
-        public Task<Foto> ObterFotoPrincipalAsync(int pessoaId)
+
+
+        public async Task<Foto> ObterFotoPrincipalAsync(int pessoaId)
         {
-            throw new NotImplementedException();
+            return await _context.Fotos
+                .Where(f => f.PessoaId == pessoaId && f.Principal)
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -45,7 +45,7 @@ namespace CadastroUsuario.Api.Controllers
         }
 
         [HttpPost("cadastrar")]
-        [Authorize(Roles = Roles.Administrador)]
+        //[Authorize(Roles = Roles.Administrador)]
         //[ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult> Cadastrar(UsuarioCadastroRequest request)
         {

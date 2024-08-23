@@ -7,7 +7,7 @@ using System.Runtime.ConstrainedExecution;
 
 namespace CadastroUsuario.Api.Validation
 {
-    public class PessoaValidation : AbstractValidator<PessoaRequest>
+    public class PessoaValidation : AbstractValidator<PessoaCadastroRequest>
     {
         public PessoaValidation()
         {
@@ -27,10 +27,7 @@ namespace CadastroUsuario.Api.Validation
                 .WithMessage("O campo sobrenome, não pode ser vazio.");
 
             RuleFor(n => n.CPF)
-                .NotEmpty()
-                .NotNull()
-                .Must(ValidarCPF).WithMessage("Por favor, insira um CPF válido.")
-                .WithMessage("O campo CPF, não pode ser vazio.");
+                .Must(ValidarCPF).WithMessage("Por favor, insira um CPF válido.");
 
             RuleFor(n => n.DataNascimento)
                 .NotEmpty()
@@ -45,24 +42,27 @@ namespace CadastroUsuario.Api.Validation
                 .Must(sexo => IsSexoValido(sexo))
                 .WithMessage("Por favor, insira uma opção válida para o sexo.");
 
-            //RuleFor(n => n.Foto)
-            //    .NotEmpty()
-            //    .NotNull()
-            //    .Must(foto => IsValidSize(foto)).WithMessage("A foto deve ter no máximo 1 MB.")
-            //    .Must(foto => IsValidFormat(foto)).WithMessage("A foto deve ser salva como .jpg.");
+            RuleFor(n => n.Foto)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("O campo foto, não pode ser vazio.");
 
 
         }
+
+
 
         private bool ValidarCPF(string cpf)
         {
             if (string.IsNullOrWhiteSpace(cpf)) return false;
 
+            // Remove pontos e traços
             cpf = cpf.Replace(".", "").Replace("-", "");
 
+            // Verifica se o comprimento é 11
             if (cpf.Length != 11) return false;
 
-
+            // Verifica se todos os dígitos são iguais
             if (cpf.All(c => c == cpf[0])) return false;
 
             int[] multiplicador1 = { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -71,32 +71,31 @@ namespace CadastroUsuario.Api.Validation
             string tempCpf = cpf.Substring(0, 9);
             int soma = 0;
 
+            // Cálculo do primeiro dígito verificador
             for (int i = 0; i < 9; i++)
                 soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
 
             int resto = soma % 11;
-            if (resto < 2)
-                resto = 0;
-            else
-                resto = 11 - resto;
+            resto = resto < 2 ? 0 : 11 - resto;
 
             string digito = resto.ToString();
-            tempCpf = tempCpf + digito;
+            tempCpf += digito;
             soma = 0;
 
+            // Cálculo do segundo dígito verificador
             for (int i = 0; i < 10; i++)
                 soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
 
             resto = soma % 11;
-            if (resto < 2)
-                resto = 0;
-            else
-                resto = 11 - resto;
+            resto = resto < 2 ? 0 : 11 - resto;
 
-            digito = digito + resto.ToString();
+            digito += resto.ToString();
 
+            // Verificação final do CPF
             return cpf.EndsWith(digito);
         }
+
+
 
 
         private bool IsSexoValido(string sexo)

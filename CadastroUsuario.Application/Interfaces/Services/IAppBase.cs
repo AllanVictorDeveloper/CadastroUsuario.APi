@@ -4,7 +4,7 @@ namespace CadastroUsuario.Application.Interfaces.Services;
 
 public interface IAppBase<T> where T : class
 {
-    T Inserir(T objeto);
+    Task<T> Inserir(T objeto);
 
     T Atualizar(T objeto);
 

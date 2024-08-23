@@ -6,6 +6,8 @@ using CadastroUsuario.Application.DTOs.Response;
 using CadastroUsuario.Application.Interfaces.Services;
 using CadastroUsuario.Domain.Entities;
 using CadastroUsuario.Domain.Interfaces.Services;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CadastroUsuario.Application.Services
 {
@@ -13,15 +15,17 @@ namespace CadastroUsuario.Application.Services
     {
         private readonly IMapper _imapper;
         private readonly IServicePessoa _service;
+        private readonly IServiceFoto _serviceFoto;
 
 
-        public AppPessoa(IServicoBase<Pessoa> servico, IMapper imapper, IServicePessoa service) : base(servico)
+        public AppPessoa(IMapper imapper, IServicePessoa service, IServiceFoto serviceFoto) : base(service)
         {
             _imapper = imapper;
             _service = service;
+            _serviceFoto = serviceFoto;
         }
 
-        public PessoaResponse Atualizar(PessoaRequest request)
+        public PessoaResponse Atualizar(PessoaCadastroRequest request)
         {
             try
             {
@@ -38,14 +42,38 @@ namespace CadastroUsuario.Application.Services
 
         }
 
-        public void Cadastrar(PessoaRequest request)
+        public async Task CadastrarAsync(PessoaCadastroRequest request)
         {
             try
             {
-                var mapperRequest = _imapper.Map<Pessoa>(request);
+                // Remove pontos e traços
+                request.CPF = request.CPF.Replace(".", "").Replace("-", "");
 
-                var pessoaSave = _service.Inserir(mapperRequest);
+                // Conversão da imagem para blob
+                using var memoryStream = new MemoryStream();
+                await request.Foto.CopyToAsync(memoryStream);
+                var imagemBlob = memoryStream.ToArray();
 
+                // Geração do hash do nome
+                var nomeHash = GerarHash(request.Foto.FileName);
+
+                // Criação da entidade Pessoa
+                var pessoa = new Pessoa(request.Nome, request.SobreNome, request.CPF, request.DataNascimento, request.Sexo);
+
+                // Criação da entidade Foto
+                var foto = new Foto
+                {
+                    Pessoa = pessoa,
+                    Imagem = imagemBlob,
+                    NomeHash = nomeHash,
+                    Extensao = Path.GetExtension(request.Foto.FileName),
+                    Principal = true, // Definindo a primeira foto como principal
+                    DataCadastro = DateTime.Now
+                };
+
+                // Salvando no banco de dados
+                await _service.Inserir(pessoa);
+                await _serviceFoto.Inserir(foto);
 
 
             }
@@ -74,6 +102,13 @@ namespace CadastroUsuario.Application.Services
             var listPessoa = _service.ListarTudo();
 
             return _imapper.Map<ICollection<PessoaResponse>>(listPessoa);
+        }
+
+        private string GerarHash(string input)
+        {
+            using var sha256 = SHA256.Create();
+            var hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
         }
     }
 }
